@@ -57,26 +57,14 @@ jobs:
 #        platform-version: # optional
         # The directory where the build output will be copied to.        
 #        output-directory: # optional
-
-# Azure login
-    - uses: azure/login@v1
+       
+          
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      id: deploy-to-webapp
       with:
-       creds: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}
-    - uses: azure/appservice-settings@v1
-      with:
-       app-name: ${{ env.AZURE_WEBAPP_NAME }}
-       mask-inputs: false
-       general-settings-json: '{"linuxFxVersion": "PYTHON|${{ env.PYTHON_VERSION }}"}' #'General configuration settings as Key Value pairs'
-
-
-    - uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: .
-        startup-command: ''
+        app-name: 'MBSChat'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}    
         
-# Azure logout
-    - name: logout
-      run: |
-       az logout
 
