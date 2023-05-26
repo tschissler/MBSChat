@@ -54,8 +54,7 @@ jobs:
         # 'Version of the programming platform used to build the web app; if no value is provided, Oryx will determine the version needed to build the repository.'
 
 #        platform-version: # optional
-        # The directory where the build output will be copied to.
-        
+        # The directory where the build output will be copied to.        
 #        output-directory: # optional
 
 # Azure login
