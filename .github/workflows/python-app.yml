@@ -37,3 +37,19 @@ jobs:
 #    - name: Test with pytest
 #      run: |
 #        pytest
+
+    - name: App Service Web App Build Action
+      uses: Azure/appservice-build@v3
+#      with:
+        # 'Relative path (within the repository) to the source directory of the project you want to build; if no value is provided for this, the root of the repository ("GITHUB_WORKSPACE" environment variable) will be built.'
+
+#        source-directory: # optional
+        # 'Programming platform used to build the web app; if no value is provided, Oryx will determine the platform to build with. Supported values: dotnet, golang, java, nodejs, php, python, ruby'
+        
+#        platform: # optional
+        # 'Version of the programming platform used to build the web app; if no value is provided, Oryx will determine the version needed to build the repository.'
+
+#        platform-version: # optional
+        # The directory where the build output will be copied to.
+        
+#        output-directory: # optional
