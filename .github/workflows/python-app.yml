@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./MBSChatBackend
+        working-directory: MBSChatBackend
         
     steps:
     - run: az --version
