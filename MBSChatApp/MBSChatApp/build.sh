@@ -1,0 +1,1 @@
+dotnet publish MBSChatApp.csproj -c:Debug -t:InstallAndroidDependencies -f:net7.0-android -p:AndroidSdkDirectory="/opt/android-sdk-linux" -p:AcceptAndroidSDKLicenses=True 
