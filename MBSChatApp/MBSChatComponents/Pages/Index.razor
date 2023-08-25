@@ -1,18 +1,29 @@
 @page "/"
 @using MBSChatComponents
+@using System.Net.Http.Json
 @inject HttpClient http
 
-<h1>@title</h1>
+<h1>@data.title</h1>
 
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 @code {
-    public string? title;
+    public Data data = new ();
 
     protected override async Task OnInitializedAsync()
     {
-        title = await http.GetStringAsync("http://127.0.0.1:1234/helloworld");
+        data = await http.GetFromJsonAsync<Data>("http://127.0.0.1:1234/helloworld");
         await base.OnInitializedAsync();
+    }
+
+    public class Data
+    {
+        public string? title { get; set; }
+
+        public Data()
+        {
+            title = "Loading...";
+        }
     }
 }

@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 @app.route('/helloworld')
 def hello_world():  # put application's code here
-    return 'Hello World and Moon!'
+    return {
+        "title": "Hello World the new JSON Backend",
+    }
 
 
 if __name__ == '__main__':
