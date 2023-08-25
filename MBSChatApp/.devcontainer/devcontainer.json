@@ -4,6 +4,13 @@
 	"name": ".NET MAUI Dev Container",
 	"build": {
 		"dockerfile": "dockerfile"	
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-dotnettools.dotnet-maui"
+			]
+		}
 	}
 
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile

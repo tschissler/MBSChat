@@ -1,28 +1,11 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM androidsdk/android-31:latest
 
-# Install required tools and libraries
-RUN apt-get update && \
-    apt-get install -y wget unzip lib32stdc++6 lib32z1 git openjdk-11-jdk && \
-    apt-get clean
+RUN apt-get update
+RUN wget https://dot.net/v1/dotnet-install.sh
+RUN chmod +x ./dotnet-install.sh
+RUN ./dotnet-install.sh -c 7.0
 
-# Set Java environment
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
-ENV PATH $PATH:$JAVA_HOME/bin
-
-# Define Android SDK versions
-ENV ANDROID_SDK_ROOT /opt/android-sdk
-ENV PATH $PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools
-
-# Install Android SDK command line tools
-RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip && \
-    unzip commandlinetools-linux-7302050_latest.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
-    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest && \
-    rm commandlinetools-linux-7302050_latest.zip
-
-RUN yes | sdkmanager --licenses && \
-    sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30"
-
-RUN dotnet workload install maui-android 
-RUN dotnet workload install maui-tizen
-RUN dotnet workload install maui-windows
+ENV PATH $PATH:~/.dotnet
+#RUN dotnet workload install maui-android 
+#RUN dotnet workload install maui-tizen
+#RUN dotnet workload install maui-windows
