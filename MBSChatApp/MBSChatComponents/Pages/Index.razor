@@ -1,29 +1,50 @@
 @page "/"
 @using MBSChatComponents
 @using System.Net.Http.Json
+@using System.Text.Json
 @inject HttpClient http
 
-<h1>@data.title</h1>
+<h1>@data.Title</h1>
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<button class="btn btn-primary" @onclick="ClickMe">Click Me</button>
 @code {
     public Data data = new ();
+    private Headers _headers = new Headers();
 
     protected override async Task OnInitializedAsync()
     {
-        data = await http.GetFromJsonAsync<Data>("http://127.0.0.1:1234/helloworld");
+        data = await http.GetFromJsonAsync<Data>("http://127.0.0.1:1234/title");
         await base.OnInitializedAsync();
+    }
+
+    protected async Task ClickMe()
+    {
+        data.Title = "Hello World!";
+        @* var content = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
+        await http.PostAsync("http://127.0.0.1:1234/title", content ); *@
+        await http.PostAsJsonAsync("http://127.0.0.1:1234/title", data);
+        await Task.CompletedTask;
     }
 
     public class Data
     {
-        public string? title { get; set; }
+        public string? Title { get; set; }
 
         public Data()
         {
-            title = "Loading...";
+            Title = "Loading...";
+        }
+    }
+
+    public class Headers
+    {
+        public string? Content_Type { get; set; }
+
+        public Headers()
+        {
+            Content_Type = "application/json";
         }
     }
 }
