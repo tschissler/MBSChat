@@ -19,8 +19,9 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --user -r requirements.txt",
-	"onCreateCommand": "git config --global core.autocrlf input"
+	"postCreateCommand": "/workspace/MBSChatBackend/.devcontainer/configure-git.sh"
+	
+	// "onCreateCommand": "git config --global core.autocrlf input"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
