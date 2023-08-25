@@ -1,14 +1,14 @@
-@page "/"
+﻿@page "/"
 @using MBSChatComponents
 @using System.Net.Http.Json
 @using System.Text.Json
 @inject HttpClient http
 
 <h1>@data.Title</h1>
-
+<input type="text" @bind="data.Message"/>
 Welcome to your new app.
 
-<button class="btn btn-primary" @onclick="ClickMe">Click Me</button>
+<button class="btn btn-primary" @onclick="ClickMe">Send Message</button>
 @code {
     public Data data = new ();
     private Headers _headers = new Headers();
@@ -31,6 +31,7 @@ Welcome to your new app.
     public class Data
     {
         public string? Title { get; set; }
+        public string Message { get; set; }
 
         public Data()
         {
