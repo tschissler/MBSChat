@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @using MBSChatComponents
 @inject HttpClient http
 
@@ -7,6 +7,12 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
-@code{
-    public string title = http.GetStringAsync;
+@code {
+    public string? title;
+
+    protected override async Task OnInitializedAsync()
+    {
+        title = await http.GetStringAsync("http://127.0.0.1:1234/helloworld");
+        await base.OnInitializedAsync();
+    }
 }
