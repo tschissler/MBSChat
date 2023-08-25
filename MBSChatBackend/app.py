@@ -1,7 +1,7 @@
 from flask import Flask, request
 
-port = 1234
-host = '127.0.0.1'
+port = int(os.environ.get('WEBSITE_PORT', 5000))
+host = '0.0.0.0'
 app = Flask(__name__)
 
 message = 'No messages'
