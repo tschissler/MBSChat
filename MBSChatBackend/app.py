@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request
 
-port = int(os.environ.get('WEBSITE_PORT', 5000))
+port = int(os.environ.get('WEBSITE_PORT', 1234))
 host = '0.0.0.0'
 app = Flask(__name__)
 
