@@ -63,11 +63,14 @@ jobs:
        
           
     - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v2.2.10
       id: deploy-to-webapp
       with:
         app-name: 'mbschatBackend'
+        package: 'MBSChatBackend'
         slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}    
+
+    
         
 
