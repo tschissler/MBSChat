@@ -6,9 +6,12 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'MBSChatBackend/**'
+      - '.github/workflows/python-app.yml'
   pull_request:
     branches: [ "main" ]
-
+    
 env:
   AZURE_WEBAPP_NAME: mbschatBackend
   PYTHON_VERSION: '3.11'
@@ -63,11 +66,14 @@ jobs:
        
           
     - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v2.2.10
       id: deploy-to-webapp
       with:
-        app-name: 'mbschatBackend'
+        app-name: ${{env.AZURE_WEBAPP_NAME}}
+        package: 'MBSChatBackend'
         slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}    
+
+    
         
 
