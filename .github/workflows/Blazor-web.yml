@@ -77,4 +77,4 @@ jobs:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}    
+          publish-profile: ${{ secrets.AZURE_BLAZOR_WEB_PUBLISH_PROFILE }}    
