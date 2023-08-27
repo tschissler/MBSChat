@@ -87,3 +87,4 @@ jobs:
           # ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_BLAZOR_WEB_PUBLISH_PROFILE }}    
+          
