@@ -15,7 +15,7 @@ Welcome to your new app.
 
     protected override async Task OnInitializedAsync()
     {
-        data = await http.GetFromJsonAsync<Data>("https://mbschatbackend.azurewebsites.net//title");
+        data = await http.GetFromJsonAsync<Data>("https://mbschatbackend.azurewebsites.net/title");
         await base.OnInitializedAsync();
     }
 
