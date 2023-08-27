@@ -68,7 +68,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+          path: D:\a\MBSChat\MBSChat\MBSChatApp\MBSChatWeb\blazor-web\ 
+          # ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
       - name: Dir
         run: dir -s
@@ -77,6 +78,7 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          package: D:\a\MBSChat\MBSChat\MBSChatApp\MBSChatWeb\blazor-web\ 
+          # ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_BLAZOR_WEB_PUBLISH_PROFILE }}    
