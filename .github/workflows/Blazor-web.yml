@@ -70,11 +70,13 @@ jobs:
           name: .net-app
           path: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
+      - name: Dir
+        run: dir -s
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2.2.10
         id: deploy-to-webapp
         with:
           app-name: ${{env.AZURE_WEBAPP_NAME}}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/**
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_BLAZOR_WEB_PUBLISH_PROFILE }}    
