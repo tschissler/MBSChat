@@ -48,6 +48,9 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: chnage working directory
+        run: cd MBSChatApp\MBSChatWeb
+        
       - name: Set up dependency caching for faster builds
         uses: actions/cache@v3
         with:
