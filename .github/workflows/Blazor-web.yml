@@ -39,7 +39,9 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-
+    defaults:
+      run:
+        working-directory: ./MBSChatApp/MBSChatWeb
     steps:
       - uses: actions/checkout@v3
 
@@ -47,9 +49,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: chnage working directory
-        run: cd MBSChatApp\MBSChatWeb
         
       - name: Set up dependency caching for faster builds
         uses: actions/cache@v3
