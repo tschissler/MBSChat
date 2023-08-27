@@ -21,10 +21,10 @@
 name: Build and deploy Blazor Web app to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: mbschatweb    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: './blazor-web'      # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '7.0'                 # set this to the .NET Core version to use
-
+  AZURE_WEBAPP_NAME: mbschatweb                   # set this to the name of your Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: './blazor-web'       # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '7.0'                           # set this to the .NET Core version to use
+  WORKING_DIRECTORY: './MBSChatApp/MBSChatWeb'
 on:
   push:
     branches: [ "main" ]
@@ -39,9 +39,7 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: ./MBSChatApp/MBSChatWeb
+
     steps:
       - uses: actions/checkout@v3
 
@@ -51,8 +49,9 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
         
       - name: Set up dependency caching for faster builds
-        uses: actions/cache@v3
+        uses: actions/cache@v3        
         with:
+          working-directory: '${{ env.WORKING_DIRECTORY }}'
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
@@ -60,23 +59,29 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        working-directory: '${{ env.WORKING_DIRECTORY }}'
 
       - name: dotnet publish
-        run: dotnet publish -c Debug -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        run: dotnet publish -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+        working-directory: '${{ env.WORKING_DIRECTORY }}'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
+          working-directory: '${{ env.WORKING_DIRECTORY }}'
           name: .net-app
           path: D:\a\MBSChat\MBSChat\MBSChatApp\MBSChatWeb\blazor-web\ 
           # ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
       - name: Dir
         run: dir -s
+        working-directory: '${{ env.WORKING_DIRECTORY }}'
+        
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2.2.10
         id: deploy-to-webapp
         with:
+          working-directory: '${{ env.WORKING_DIRECTORY }}'
           app-name: ${{env.AZURE_WEBAPP_NAME}}
           package: D:\a\MBSChat\MBSChat\MBSChatApp\MBSChatWeb\blazor-web\ 
           # ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
