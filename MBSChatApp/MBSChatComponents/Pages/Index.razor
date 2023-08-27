@@ -15,7 +15,7 @@ Welcome to your new app.
 
     protected override async Task OnInitializedAsync()
     {
-        data = await http.GetFromJsonAsync<Data>("http://127.0.0.1:1234/title");
+        data = await http.GetFromJsonAsync<Data>("https://mbschatbackend.azurewebsites.net//title");
         await base.OnInitializedAsync();
     }
 
@@ -24,7 +24,7 @@ Welcome to your new app.
         data.Title = "Hello World!";
         @* var content = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
         await http.PostAsync("http://127.0.0.1:1234/title", content ); *@
-        await http.PostAsJsonAsync("http://127.0.0.1:1234/title", data);
+        await http.PostAsJsonAsync("https://mbschatbackend.azurewebsites.net//title", data);
         await Task.CompletedTask;
     }
 
