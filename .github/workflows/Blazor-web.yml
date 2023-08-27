@@ -70,11 +70,11 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/blazor-web
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2.2.10
+        id: deploy-to-webapp
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}
+          app-name: ${{env.AZURE_WEBAPP_NAME}}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}    
