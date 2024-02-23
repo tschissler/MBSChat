@@ -16,10 +16,19 @@
 }
 
 @code {
+	protected override void OnInitialized()
+	{
+        messageService.Notify += () => InvokeAsync(StateHasChanged);
+
+		base.OnInitialized();
+	}
+}
+
+@code {
 	private string message = "Hello, World!";
 
 	private void ClickMe()
 	{
-		messageService.Messages.Add(message);
+		messageService.AddMessage(message);
 	}
 }
