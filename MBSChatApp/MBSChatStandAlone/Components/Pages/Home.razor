@@ -1,0 +1,25 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h1>MBS Chat</h1>
+
+<InputText @bind-Value="message" />
+
+<button class="btn btn-primary" @onclick="ClickMe">Send Message</button>
+
+@foreach (var message in messages)
+{
+	<p>@message</p>
+}
+
+@code {
+	private string message = "Hello, World!";
+	private List<string> messages = new List<string>();
+
+	private void ClickMe()
+	{
+		messages.Add(message);
+	}
+}
