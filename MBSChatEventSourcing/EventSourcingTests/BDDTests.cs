@@ -1,4 +1,6 @@
+#nullable enable
 using EventSourcing;
+using FluentAssertions;
 
 namespace EventSourcingTests
 {
@@ -6,18 +8,28 @@ namespace EventSourcingTests
     public class BDDTests
     {
         [TestMethod]
-        public void NeueNachrichtKannGesendetUndWiederGelesenWerden()
+        public void NeueNachrichtKannGesendetWerden()
         {
-            // Arrange
             var channel = new ChannelAggregateRoot();
             var nachricht = new Nachricht("Hallo Welt");
+            var expectedResult = new ChatNachrichtGeschickt(nachricht);
+            
+            var chatNachrichtGeschickt = channel.SendeNachricht(nachricht);
+            
+            chatNachrichtGeschickt.Should().Be(expectedResult);
+        }
 
-            // Act
-            channel.SendeNachricht(nachricht);
 
-            // Assert
-            Assert.AreEqual(1, channel.Nachrichten.Count);
-            Assert.AreEqual(nachricht, channel.Nachrichten[0]);
+        [TestMethod]
+        public void LeereNachrichtKannNichtGesendetWerden()
+        {
+            var channel = new ChannelAggregateRoot();
+            var nachricht = new Nachricht("");
+            var expectedResult = new ChatNachrichtGeschickt(nachricht);
+            
+            Action act = () => channel.SendeNachricht(nachricht);
+
+            act.Should().Throw<ArgumentException>().WithMessage("*leer*");
         }
     }
 }
