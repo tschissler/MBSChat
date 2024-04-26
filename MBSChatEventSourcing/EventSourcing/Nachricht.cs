@@ -1,3 +1,3 @@
 namespace EventSourcing;
 
-public record Nachricht(string Inhalt);
+public record Nachricht(string Inhalt, User User);

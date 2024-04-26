@@ -1,46 +1,73 @@
-#nullable enable
 using EventSourcing;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EventSourcingTests
+namespace EventSourcingTests;
+
+[TestClass]
+public class BDDTests
 {
-    [TestClass]
-    public class BDDTests
+    [TestMethod]
+    public void NeueNachrichtKannGesendetWerden()
     {
-        [TestMethod]
-        public void NeueNachrichtKannGesendetWerden()
-        {
-            var channel = new ChannelAggregateRoot();
-            var nachricht = new Nachricht("Hallo Welt");
-            var expectedResult = new ChatNachrichtGeschickt(nachricht);
+        var channel = new ChannelAggregateRoot();
+        var nachricht = new Nachricht("Hallo Welt", new User("Teddy Tester"));
+        var expectedResult = new ChatNachrichtGeschickt(nachricht);
             
-            var chatNachrichtGeschickt = channel.SendeNachricht(nachricht);
+        var chatNachrichtGeschickt = channel.SendeNachricht(nachricht);
             
-            chatNachrichtGeschickt.Should().Be(expectedResult);
-        }
+        chatNachrichtGeschickt.Should().Be(expectedResult);
+    }
 
-
-        [TestMethod]
-        public void LeereNachrichtKannNichtGesendetWerden()
-        {
-            var channel = new ChannelAggregateRoot();
-            var nachricht = new Nachricht("");
+    [TestMethod]
+    public void LeereNachrichtKannNichtGesendetWerden()
+    {
+        var channel = new ChannelAggregateRoot();
+        var nachricht = new Nachricht(string.Empty, new User("Rainer Zufall"));
             
-            Action act = () => channel.SendeNachricht(nachricht);
+        Action act = () => channel.SendeNachricht(nachricht);
 
-            act.Should().Throw<ArgumentException>().WithMessage("*leer*");
-        }
+        act.Should().Throw<ArgumentException>().WithMessage("*leer*");
+    }
 
-        [TestMethod]
-        public void ZuLangeNachrichtKannNichtGesendetWerden()
-        {
-			var channel = new ChannelAggregateRoot();
-			var nachricht = new Nachricht(new string('t', 1025));
+    [TestMethod]
+    public void ZuLangeNachrichtKannNichtGesendetWerden()
+    {
+        var channel = new ChannelAggregateRoot();
+        var nachricht = new Nachricht(new string('t', 1025), new User("Arno Amoebe"));
 
-			Action act = () => channel.SendeNachricht(nachricht);
+        Action act = () => channel.SendeNachricht(nachricht);
 
-			act.Should().Throw<ArgumentException>().WithMessage("*mehr als*");
-		}
+        act.Should().Throw<ArgumentException>().WithMessage("*mehr als*");
+    }
+
+    [TestMethod]
+    public void UserKannNichtMehrAlsDreiNachrichtenInFolgeSchreiben()
+    {
+        var channel = new ChannelAggregateRoot();
+        var user = new User("Arno Amoebe");
+
+        channel.SendeNachricht(new Nachricht("a", user));
+        channel.SendeNachricht(new Nachricht("b", user));
+        channel.SendeNachricht(new Nachricht("c", user));
+        Action act = () => channel.SendeNachricht(new Nachricht("d", user));
+
+        act.Should().Throw<ArgumentException>().WithMessage("*Limit*");
+    }
+
+    [TestMethod]
+    public void UserCounterWirdResettetWennUserWechselt()
+    {
+        var channel = new ChannelAggregateRoot();
+        var user = new User("Arno Amoebe");
+        var letzteNachricht = new Nachricht("d", user);
+        var expectedResult = new ChatNachrichtGeschickt(letzteNachricht);
+
+        channel.SendeNachricht(new Nachricht("a", user));
+        channel.SendeNachricht(new Nachricht("b", user));
+        channel.SendeNachricht(new Nachricht("c", user));
+        channel.SendeNachricht(new Nachricht("Hi!", new User("Teddy Tester")));
+        var chatNachrichtGeschickt = channel.SendeNachricht(letzteNachricht);
+            
+        chatNachrichtGeschickt.Should().Be(expectedResult);
     }
 }
