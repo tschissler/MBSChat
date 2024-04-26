@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34818.151
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcingTests", "EventSourcingTests\EventSourcingTests.csproj", "{24EE95EC-1526-424B-99F2-DAD98AAA8F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "EventSourcing\EventSourcing.csproj", "{CE241D15-F114-4DE1-836B-46E56B27C524}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24EE95EC-1526-424B-99F2-DAD98AAA8F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24EE95EC-1526-424B-99F2-DAD98AAA8F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24EE95EC-1526-424B-99F2-DAD98AAA8F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24EE95EC-1526-424B-99F2-DAD98AAA8F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE241D15-F114-4DE1-836B-46E56B27C524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE241D15-F114-4DE1-836B-46E56B27C524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE241D15-F114-4DE1-836B-46E56B27C524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE241D15-F114-4DE1-836B-46E56B27C524}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2396BA06-775E-410E-9FFA-FAB8D45D5D8B}
+	EndGlobalSection
+EndGlobal
