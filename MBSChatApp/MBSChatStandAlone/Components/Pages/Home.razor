@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@inject MessageService messageService
+@page "/"
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -9,17 +10,25 @@
 
 <button class="btn btn-primary" @onclick="ClickMe">Send Message</button>
 
-@foreach (var message in messages)
+@foreach (var message in messageService.Messages)
 {
 	<p>@message</p>
 }
 
 @code {
+	protected override void OnInitialized()
+	{
+        messageService.Notify += () => InvokeAsync(StateHasChanged);
+
+		base.OnInitialized();
+	}
+}
+
+@code {
 	private string message = "Hello, World!";
-	private List<string> messages = new List<string>();
 
 	private void ClickMe()
 	{
-		messages.Add(message);
+		messageService.AddMessage(message);
 	}
 }
