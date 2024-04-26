@@ -1,6 +1,7 @@
 #nullable enable
 using EventSourcing;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EventSourcingTests
 {
@@ -25,11 +26,21 @@ namespace EventSourcingTests
         {
             var channel = new ChannelAggregateRoot();
             var nachricht = new Nachricht("");
-            var expectedResult = new ChatNachrichtGeschickt(nachricht);
             
             Action act = () => channel.SendeNachricht(nachricht);
 
             act.Should().Throw<ArgumentException>().WithMessage("*leer*");
         }
+
+        [TestMethod]
+        public void ZuLangeNachrichtKannNichtGesendetWerden()
+        {
+			var channel = new ChannelAggregateRoot();
+			var nachricht = new Nachricht(new string('t', 1025));
+
+			Action act = () => channel.SendeNachricht(nachricht);
+
+			act.Should().Throw<ArgumentException>().WithMessage("*mehr als*");
+		}
     }
 }
