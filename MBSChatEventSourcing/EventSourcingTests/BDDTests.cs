@@ -12,9 +12,9 @@ public class BDDTests
         var channel = new ChannelAggregateRoot();
         var nachricht = new Nachricht("Hallo Welt", new User("Teddy Tester"));
         var expectedResult = new ChatNachrichtGeschickt(nachricht);
-            
+
         var chatNachrichtGeschickt = channel.SendeNachricht(nachricht);
-            
+
         chatNachrichtGeschickt.Should().Be(expectedResult);
     }
 
@@ -23,7 +23,7 @@ public class BDDTests
     {
         var channel = new ChannelAggregateRoot();
         var nachricht = new Nachricht(string.Empty, new User("Rainer Zufall"));
-            
+
         Action act = () => channel.SendeNachricht(nachricht);
 
         act.Should().Throw<ArgumentException>().WithMessage("*leer*");
@@ -33,7 +33,8 @@ public class BDDTests
     public void ZuLangeNachrichtKannNichtGesendetWerden()
     {
         var channel = new ChannelAggregateRoot();
-        var nachricht = new Nachricht(new string('t', 1025), new User("Arno Amoebe"));
+        var nachricht =
+            new Nachricht(new string('t', 1025), new User("Arno Amoebe"));
 
         Action act = () => channel.SendeNachricht(nachricht);
 
@@ -67,7 +68,7 @@ public class BDDTests
         channel.SendeNachricht(new Nachricht("c", user));
         channel.SendeNachricht(new Nachricht("Hi!", new User("Teddy Tester")));
         var chatNachrichtGeschickt = channel.SendeNachricht(letzteNachricht);
-            
+
         chatNachrichtGeschickt.Should().Be(expectedResult);
     }
 }
