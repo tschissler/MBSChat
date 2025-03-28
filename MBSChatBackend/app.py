@@ -10,7 +10,7 @@ message = 'No messages'
 @app.route('/title')
 def hello_world():  # put application's code here
     return {
-        "title": 'New message: ' + message,
+        "title": 'Neue Nachricht: ' + message,
     }
 
 @app.route('/title', methods=['POST'])
